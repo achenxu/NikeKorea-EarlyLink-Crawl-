@@ -2,35 +2,26 @@
  
 
 import os
-
 import openpyxl
-
 from selenium import webdriver
-
 from selenium.webdriver.chrome.options import Options
-
 from selenium.webdriver.common.alert import Alert
-
 from openpyxl import workbook
-
 import xlrd
-
 import xlwt
-
 from xlutils.copy import copy
-
 from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException
  
 
  
 
-# xlwt(¿¢¼¿°ü·Ã pip)¸¦ ÀÌ¿ëÇØ »õ·Î¿î ¿¢¼¿ÀÇ workbookÀ» utf-8·Î ÀÎÄÚµùÇÏ¿© ¿¬´Ù.
+# xlwt(ì—‘ì…€ê´€ë ¨ pip)ë¥¼ ì´ìš©í•´ ìƒˆë¡œìš´ ì—‘ì…€ì˜ workbookì„ utf-8ë¡œ ì¸ì½”ë”©í•˜ì—¬ ì—°ë‹¤.
 
-# ¿¢¼¿Àº workbook > worksheet > cell ¼ø¼­·Î Á¢±Ù!
+# ì—‘ì…€ì€ workbook > worksheet > cell ìˆœì„œë¡œ ì ‘ê·¼!
 
 wb = xlwt.Workbook(encoding='utf-8')
 
-# »õ·Ó°Ô ¿¬ ¿¢¼¿ wb¿¡ worksheet ÀÌ¸§À» '2017_10 early link'·Î ¸¸µê
+# ìƒˆë¡­ê²Œ ì—° ì—‘ì…€ wbì— worksheet ì´ë¦„ì„ '2017_10 early link'ë¡œ ë§Œë“¦
 
 sheet = wb.add_sheet('2017_10 early link')
 
@@ -38,9 +29,9 @@ sheet = wb.add_sheet('2017_10 early link')
 
  
 
-#µå¶óÀÌ¹ö´Â Å©·ÒÀ¥µå¶óÀÌ¹ö¸¦ ÀÌ¿ë
+#ë“œë¼ì´ë²„ëŠ” í¬ë¡¬ì›¹ë“œë¼ì´ë²„ë¥¼ ì´ìš©
 
-#¸ğ¹ÙÀÏÆäÀÌÁö·Î Å©·Ñ¸µÀ» ÇÏ°íÀÚ ÇÏ±â¿¡ ¸ğ¹ÙÀÏÁ¢±ÙÀ» À§ÇØ useragent¸¦ ¸ğ¹ÙÀÏ±â±â·Î ¼³Á¤
+#ëª¨ë°”ì¼í˜ì´ì§€ë¡œ í¬ë¡¤ë§ì„ í•˜ê³ ì í•˜ê¸°ì— ëª¨ë°”ì¼ì ‘ê·¼ì„ ìœ„í•´ useragentë¥¼ ëª¨ë°”ì¼ê¸°ê¸°ë¡œ ì„¤ì •
 
 mobile_emulation = {
 
@@ -62,35 +53,35 @@ driver = webdriver.Chrome(chrome_options = chrome_options)
 
  
 
-#for¹® ¾È¿¡¼­ »ç¿ëÇÒ j=0À» for¹® ¾È¿¡ Á¤ÀÇÇØÁÖ¸é
+#forë¬¸ ì•ˆì—ì„œ ì‚¬ìš©í•  j=0ì„ forë¬¸ ì•ˆì— ì •ì˜í•´ì£¼ë©´
 
-#¹İº¹¹®À» µ¹¸ç °è¼Ó 0À¸·Î ÃÊ±âÈ­µÇ±â¿¡ ¹Û¿¡ ¼±¾ğÇØÁÜ
+#ë°˜ë³µë¬¸ì„ ëŒë©° ê³„ì† 0ìœ¼ë¡œ ì´ˆê¸°í™”ë˜ê¸°ì— ë°–ì— ì„ ì–¸í•´ì¤Œ
 
 j=0
 
  
 
-#for ¹İº¹¹®À» µ¹¸®´Âµ¥ startnumÀÌ¶õ º¯¼öÀÇ ¹üÀ§¸¦ 31090330~31099999·Î Á¤ÀÇÇÏ¿©
+#for ë°˜ë³µë¬¸ì„ ëŒë¦¬ëŠ”ë° startnumberë¶€í„° finishnumberê¹Œì§€
 
-#startnumº¯¼ö°¡ 31090330°ªºÎÅÍ 31090331, 31090332¿Í °°ÀÌ ¿À¸£¸ç ÇØ´ç ¹üÀ§¸¦ Â÷±ÙÂ÷±Ù µ·´Ù.
+#startnumë³€ìˆ˜ë¶€í„° 1ì”© ì˜¤ë¥´ë©° í•´ë‹¹ ë²”ìœ„ë¥¼ ëˆë‹¤.
 
-#startnum = »óÇ°³Ñ¹ö·Î¼­ URL¿¡ ÀÖ´Â »óÇ°³Ñ¹ö¿¡ µû¶ó ÆäÀÌÁö°¡ ÇØ´ç »óÇ°ÆäÀÌÁö·Î ´Ş¶óÁø´Ù.
+#startnum = ìƒí’ˆë„˜ë²„ë¡œì„œ URLì— ìˆëŠ” ìƒí’ˆë„˜ë²„ì— ë”°ë¼ í˜ì´ì§€ê°€ í•´ë‹¹ ìƒí’ˆí˜ì´ì§€ë¡œ ë‹¬ë¼ì§„ë‹¤.
 
-for startnum in range(31100000, 31109999):
+for startnum in range(startnumber, finishnumber): # need to set range
 
-        #Å©·Ñ¸µ ÇÒ URL Áß NKµÚÀÇ °ªÀÌ startnumÀÌ °¡Áø º¯¼ö·Î µ¹±â À§ÇØ 
+        #í¬ë¡¤ë§ í•  URL ì¤‘ NKë’¤ì˜ ê°’ì´ startnumì´ ê°€ì§„ ë³€ìˆ˜ë¡œ ëŒê¸° ìœ„í•´ 
 
-        #%d·Î ³õ°í %dÀÇ °ªÀÌ startnumÀÓÀ» ¼±¾ğ
+        #%dë¡œ ë†“ê³  %dì˜ ê°’ì´ startnumì„ì„ ì„ ì–¸
 
         driver.get("http://m.nike.co.kr/mobile/goods/showGoodsDetail.lecs?goodsNo=NK%d" % startnum)
 
-        #Try except¹®ÀÇ ¼³¸í
+        #Try exceptë¬¸ì˜ ì„¤ëª…
 
-        #Å©·ÒÀ¥µå¶óÀÌ¹ö¿¡ alertÀÌ ÀÏ¾î³¯ °æ¿ì alertÀ» acceptÇÏ°í
+        #í¬ë¡¬ì›¹ë“œë¼ì´ë²„ì— alertì´ ì¼ì–´ë‚  ê²½ìš° alertì„ acceptí•˜ê³ 
 
-        #alertÀÌ ¾øÀ» °æ¿ì passÇÔ
+        #alertì´ ì—†ì„ ê²½ìš° passí•¨
 
-        #except¹®ÀÌ ¾øÀÌ alert.accept()¸¸ ÀÛ¼ºÇÒ °æ¿ì ¿¡·¯°¡ ¹ß»ıÇÏÁö ¾ÊÀº °æ¿ì°¡ ¿¡·¯ÀÎ°ÍÃ³·³ ½ÇÇà Á¾·áµÈ´Ù.
+        #exceptë¬¸ì´ ì—†ì´ alert.accept()ë§Œ ì‘ì„±í•  ê²½ìš° ì—ëŸ¬ê°€ ë°œìƒí•˜ì§€ ì•Šì€ ê²½ìš°ê°€ ì—ëŸ¬ì¸ê²ƒì²˜ëŸ¼ ì‹¤í–‰ ì¢…ë£Œëœë‹¤.
 
         try:
 
@@ -102,9 +93,9 @@ for startnum in range(31100000, 31109999):
 
             pass
 
-        #Å©·Ñ¸µÇÏ°íÀÚ ÇÏ´Â URL(driver.get¿¡ Á¤ÀÇÇÑ ÁÖ¼Ò) ³» crawlÇÏ°íÀÚ ÇÏ´Â ºÎºĞÀ» °³¹ßÀÚµµ±¸¸¦ ÅëÇØ Ã£Àº ÈÄ
+        #í¬ë¡¤ë§í•˜ê³ ì í•˜ëŠ” URL(driver.getì— ì •ì˜í•œ ì£¼ì†Œ) ë‚´ crawlí•˜ê³ ì í•˜ëŠ” ë¶€ë¶„ì„ ê°œë°œìë„êµ¬ë¥¼ í†µí•´ ì°¾ì€ í›„
 
-        #xpath°æ·Î¸¦ ÁöÁ¤ÇØÁÖ¾î xpath¸¦ ÅëÇØ ÇØ´ç ºÎºĞÀ» Ã£µµ·Ï ÇÑ´Ù.        
+        #xpathê²½ë¡œë¥¼ ì§€ì •í•´ì£¼ì–´ xpathë¥¼ í†µí•´ í•´ë‹¹ ë¶€ë¶„ì„ ì°¾ë„ë¡ í•œë‹¤.        
 
         page_results = driver.find_elements_by_xpath('//*[@id="productDetail"]/div[1]/h1')
 
@@ -112,14 +103,14 @@ for startnum in range(31100000, 31109999):
 
         
 
-        #page_results °á°ú°ª ³» Å¬·¡½º = tit (Á¦°¡ xpathÇØ¼­ Ã£°íÀÚÇÏ´Â ºÎºĞ)¿¡¼­
+        #page_results ê²°ê³¼ê°’ ë‚´ í´ë˜ìŠ¤ = tit (ì œê°€ xpathí•´ì„œ ì°¾ê³ ìí•˜ëŠ” ë¶€ë¶„)ì—ì„œ
 
         for tit in page_results:
 
-            print(tit.text) #Å¬·¡½º = titÀÎ °ªÀÇ text¸¦ printÇÔ
+            print(tit.text) #í´ë˜ìŠ¤ = titì¸ ê°’ì˜ textë¥¼ printí•¨
 
-            sheet.write(j,1,tit.text) #ÇØ´ç text¸¦ ¿¢¼¿ ³» worksheetÀÇ 0,1(B1¼¿)¿¡ writeÇÑ´Ù.
+            sheet.write(j,1,tit.text) #í•´ë‹¹ textë¥¼ ì—‘ì…€ ë‚´ worksheetì˜ 0,1(B1ì…€)ì— writeí•œë‹¤.
 
-            j+=1 #j¸¦ ÇÏ³ª¾¿ ³ô¿©°¡ 1,1(B2¼¿), 2,1(B3¼¿)°ú °°ÀÌ tit.text°ªÀ» Â÷±ÙÂ÷±Ù ¼¿À» ³»·Á°¡¸ç writeÇÒ¼öÀÖµµ·Ï ÇÑ´Ù.
+            j+=1 #jë¥¼ í•˜ë‚˜ì”© ë†’ì—¬ê°€ 1,1(B2ì…€), 2,1(B3ì…€)ê³¼ ê°™ì´ tit.textê°’ì„ ì°¨ê·¼ì°¨ê·¼ ì…€ì„ ë‚´ë ¤ê°€ë©° writeí• ìˆ˜ìˆë„ë¡ í•œë‹¤.
 
-            wb.save('2017_11_Early_Link_Crawl_After_31100000_5.xls') #"2017_09_Early_Link_Crawl.xls"ÀÌ¸§À¸·Î ÇØ´ç ÆÄÀÏÀ» ¼¼ÀÌºêÇÑ´Ù.
+            wb.save('2017_11_Early_Link_Crawl_After_31100000_5.xls') #"2017_09_Early_Link_Crawl.xls"ì´ë¦„ìœ¼ë¡œ í•´ë‹¹ íŒŒì¼ì„ ì„¸ì´ë¸Œí•œë‹¤.
